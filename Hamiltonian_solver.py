@@ -18,7 +18,7 @@ from scipy import sparse
 from scipy.sparse import diags
 from scipy.sparse import dia_matrix
 
-Elevels = 500
+Elevels = 200
 
 images = [0, 5]
 
