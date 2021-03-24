@@ -123,9 +123,7 @@ if __name__ == '__main__':
 
     if 1:
         np.save('data_E_vectors_circle' + str(N) +'x'+ str(N) + 'e' + str(Elevels) , e_vec)
-
-
-    print('save e_vec done')
+        print('save e_vec done')
 
     displayAndSaveIm(e_vec)
     
