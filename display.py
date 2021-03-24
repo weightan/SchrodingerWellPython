@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
 
 e_vec = np.load('data_E_vectors_circle200x200e150.npy')
-N = 100
+N = 200
 
 print('done load')
 
