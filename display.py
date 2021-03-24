@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
 
-e_vec = np.load('data_E_vectors_circle_100x100.npy')
+e_vec = np.load('data_E_vectors_circle100x100e100.npy')
 N = 100
 
 print('done load')
