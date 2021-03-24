@@ -12,7 +12,7 @@ print('done load')
 #cmap1 = pal.ListedColormap(palettable.colorbrewer.qualitative.Dark2_7.mpl_colors)
 
 
-for i in range(80, 120):
+for i in range(80, 99):
     #figi, axi = plt.subplots(1, 1)
     figure(num = None, figsize=(6, 6), dpi=300)
     plt.axis('off') 
