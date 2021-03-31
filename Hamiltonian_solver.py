@@ -126,6 +126,51 @@ def makeTorWellMatrix (n, inW, outW):
     return well_matrix
 
 
+def makeRoseWellMatrix (n, inW, outW):
+
+    well_matrix = np.empty((n, n))
+
+    sides = 100
+    
+    polA = polygonTr(sides, n/2, 0, (n/2 - 10, n/2))
+    xp1 = tuple([ polA[i][0] for i in range(0, sides) ])
+    yp1 = tuple([ polA[i][1] for i in range(0, sides) ])
+
+    polB = polygonTr(sides, n/2, (2/3) * math.pi, (n/2- 10, n/2))
+    xp2 = tuple([ polB[i][0] for i in range(0, sides) ])
+    yp2 = tuple([ polB[i][1] for i in range(0, sides) ])
+
+    polC = polygonTr(sides, n/2, -(2/3) * math.pi, (n/2- 10, n/2))
+    xp3 = tuple([ polC[i][0] for i in range(0, sides) ])
+    yp3 = tuple([ polC[i][1] for i in range(0, sides) ])
+
+    
+    for i in range(0, n):
+        for j in range(0, n):
+            if inPolygon(i, j, xp1, yp1) or inPolygon(i, j, xp2, yp2) or inPolygon(i, j, xp3, yp3):
+                well_matrix[i][j] = inW
+            else:
+                well_matrix[i][j] = outW
+                
+    return well_matrix
+
+
+def polygonTr(sides, radius = 1, rotation = 0, translation = None):
+
+    k = 3
+    one_segment = math.pi / (sides * k)
+    
+
+    points = [
+        (math.cos(one_segment * i + rotation - math.pi/6) * math.cos(k*(one_segment * i + rotation - math.pi/6)) * radius,
+         math.cos((one_segment * i + rotation - math.pi/6)*k) * math.sin(one_segment * i + rotation - math.pi/6) * radius)
+        for i in range(sides)]
+
+    if translation:
+        points = [[sum(pair) for pair in zip(point, translation)]
+                  for point in points]
+
+    return points
 
 def general_potential(matrixWell2D):
 
