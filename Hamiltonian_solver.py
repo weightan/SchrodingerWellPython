@@ -95,6 +95,35 @@ def makeCircleWellMatrix (n, inW, outW):
     return well_matrix
 
 
+def makeBiCircleWellMatrix (n, inW, outW):
+
+    well_matrix = np.empty((n, n))
+    
+    r = n / (2 + math.sqrt(2))
+
+    for i in range(0, n):
+        for j in range(0, n):
+            if (math.dist([i, j], [r, r]) <= r) or (math.dist([i, j], [n - r - 3, n - r - 3]) <= r):
+                well_matrix[i][j] = inW
+            else:
+                well_matrix[i][j] = outW
+
+    return well_matrix
+
+def makeTorWellMatrix (n, inW, outW):
+
+    well_matrix = np.empty((n, n))
+    
+    r = n / (2 + math.sqrt(2))
+
+    for i in range(0, n):
+        for j in range(0, n):
+            if (math.dist([i, j], [(n-1)/2, (n-1)/2]) <= (n-1)/2) and (math.dist([i, j], [(n-1)/2, (n-1)/2]) > (n-1)/4):
+                well_matrix[i][j] = inW
+            else:
+                well_matrix[i][j] = outW
+
+    return well_matrix
 
 
 
