@@ -172,6 +172,24 @@ def polygonTr(sides, radius = 1, rotation = 0, translation = None):
 
     return points
 
+def makeHeartWellMatrix (n, inW, outW):
+
+    well_matrix = np.empty((n, n))
+    
+
+    for i in range(0, n):
+        for j in range(0, n):
+
+            x = (i - n/2)/110  
+            y = (j - n/2 + 20)/110  
+
+            if 5*((x**2 + y**2 - 1)**3) < 6*(x**2)*(y**3):
+                well_matrix[i][j] = inW
+            else:
+                well_matrix[i][j] = outW
+
+    return well_matrix
+
 def general_potential(matrixWell2D):
 
     position_mesh = np.matrix.flatten( matrixWell2D )
