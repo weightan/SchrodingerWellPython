@@ -10,6 +10,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from scipy.sparse.linalg import eigs 
 from scipy.sparse import diags, dia_matrix
 
+import open3d as o3d
 
 
 def makeSphereWellMatrix (n, inW, outW):
@@ -82,14 +83,32 @@ def displayVec (vectorToImage):
 
 
 
+
+def toList(arr, n):
+
+    temp = []
+
+    for i in range(0, n):
+
+        for j in range(0, n):
+
+            for k in range(0, n):
+
+                if arr[i][j][k] >= 0.00001:
+                    temp.append([i, j, k])
+
+    return np.array(temp)
+
+
+
 if __name__ == '__main__':
 
-    N = 40
+    N = 70
 
     mesh = makeSphereWellMatrix(N, 1, 0)
     e_values, e_vec = general_potential_3d(mesh, N, 16)
 
-    Elevel = pow(np.absolute( e_vec[:, 4].reshape(N, N, N) ), 2) 
+    Elevel = pow(np.absolute( e_vec[:, 2].reshape(N, N, N) ), 2) 
 
     '''
     for i in range(N):
@@ -98,5 +117,15 @@ if __name__ == '__main__':
         displayVec(ar)
     '''
 
+    xyz = toList(Elevel, N)
+
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(xyz)
+
+    o3d.visualization.draw_geometries([pcd])
+
+
+    '''
     for i in range(0, N):
         displayVec(Elevel[:,:, i])
+    '''
