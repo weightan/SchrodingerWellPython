@@ -95,7 +95,7 @@ def toList(arr, n):
             for k in range(0, n):
 
                 if arr[i][j][k] >= 0.00001:
-                    
+
                     color = 1 - arr[i][j][k]
                     temp.append([i, j, k])
 
@@ -105,8 +105,8 @@ def toList(arr, n):
 
 if __name__ == '__main__':
 
-    Elevels = 16
-    N = 100
+    Elevels = 50
+    N = 70
 
     mesh = makeSphereWellMatrix(N, 1, 0)
     e_values, e_vec = general_potential_3d(mesh, N, Elevels)
