@@ -95,6 +95,8 @@ def toList(arr, n):
             for k in range(0, n):
 
                 if arr[i][j][k] >= 0.00001:
+                    
+                    color = 1 - arr[i][j][k]
                     temp.append([i, j, k])
 
     return np.array(temp)
@@ -103,12 +105,16 @@ def toList(arr, n):
 
 if __name__ == '__main__':
 
-    N = 70
+    Elevels = 16
+    N = 100
 
     mesh = makeSphereWellMatrix(N, 1, 0)
-    e_values, e_vec = general_potential_3d(mesh, N, 16)
+    e_values, e_vec = general_potential_3d(mesh, N, Elevels)
 
-    Elevel = pow(np.absolute( e_vec[:, 2].reshape(N, N, N) ), 2) 
+    np.save('data_E_vectors_sphere' + str(N) +'x'+ str(N) +'x'+ str(N) + 'e' + str(Elevels) , e_vec)
+
+    Elevel = pow(np.absolute( e_vec[:, 15].reshape(N, N, N) ), 2) 
+
 
     '''
     for i in range(N):
