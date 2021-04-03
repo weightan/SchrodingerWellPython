@@ -14,7 +14,9 @@ def toList(arr, n):
             for k in range(0, n):
 
                 if arr[i][j][k] >= 0.000001:
+
                     color = 1 - 20000*arr[i][j][k]
+
                     temp.append([i, j, k])
                     cmap.append([color, color, color])
 
@@ -28,6 +30,10 @@ def toTxt(arr):
     f.close()
 '''
 
+
+
+
+
 if __name__ == '__main__':
 
     e_vec = np.load('data_E_vectors_sphere70x70x70e50.npy')
@@ -36,7 +42,7 @@ if __name__ == '__main__':
 
     print('done load')
 
-    for i in range(35, 38):
+    for i in range(5, 20):
         Elevel = pow(np.absolute( e_vec[:, i].reshape(N, N, N) ), 2) 
         xyz, cmap= toList(Elevel, N)
 
