@@ -3,20 +3,22 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+from PIL import Image
 
 from scipy.sparse.linalg import eigs 
 from scipy.sparse import diags, dia_matrix
 
 #calculate this number of eigenvectors = number of energy levels
-Elevels = 120
+Elevels = 89
 
+filename = 'seedmap.png'
 #image this eigenvectors
-images = [80, 100]
+images = [0, 16]
 
 # size of matrix N x N for well
 # set N = 30 to reduce the calculation time. 
-# You shouldn't set more than 500 otherwise the computation time will increase to hours
-N = 200 
+# You shouldn't put more than 500 otherwise the computation time will increase to hours
+N = 300 
 
 inWell = 1
 
@@ -151,7 +153,23 @@ def makeRoseWellMatrix (n, inW, outW):
                 well_matrix[i][j] = inW
             else:
                 well_matrix[i][j] = outW
-                
+
+    well_matrix[int(n/2 - 10)][int(n/2)] = inW       
+    well_matrix[int(n/2 - 10)][int(n/2 - 1)] = inW
+    well_matrix[int(n/2 - 10)][int(n/2 + 1)] = inW
+
+    well_matrix[int(n/2 - 10 + 1)][int(n/2)] = inW
+    well_matrix[int(n/2 - 10 - 1)][int(n/2)] = inW
+    well_matrix[int(n/2 - 10 + 1)][int(n/2 + 1)] = inW
+
+    well_matrix[int(n/2 - 10 + 1)][int(n/2 - 1)] = inW
+    well_matrix[int(n/2 - 10 - 1)][int(n/2 + 1)] = inW
+    well_matrix[int(n/2 - 10 - 1)][int(n/2 - 1)] = inW
+
+    well_matrix[int(n/2 - 10 - 2)][int(n/2 - 1)] = inW
+    well_matrix[int(n/2 - 10 - 2)][int(n/2)] = inW
+    well_matrix[int(n/2 - 10 - 2)][int(n/2 + 1)] = inW
+
     return well_matrix
 
 
@@ -184,6 +202,23 @@ def makeHeartWellMatrix (n, inW, outW):
             y = (j - n/2 + 20)/110  
 
             if 5*((x**2 + y**2 - 1)**3) < 6*(x**2)*(y**3):
+                well_matrix[i][j] = inW
+            else:
+                well_matrix[i][j] = outW
+
+    return well_matrix
+
+def makeSeedWellMatrix (n, inW, outW):
+
+    well_matrix = np.empty((n, n))
+
+    temp=Image.open(filename)
+    temp=np.array(temp.convert('1'))
+
+
+    for i in range(0, n):
+        for j in range(0, n):
+            if temp[i][j]:
                 well_matrix[i][j] = inW
             else:
                 well_matrix[i][j] = outW
@@ -249,11 +284,12 @@ def displayAndSaveIm (vectorsToImage):
 
 if __name__ == '__main__':
 
+    print('start')
+    #mesh = makeCircleWellMatrix (N, inWell, outWell)
+    mesh = makeSeedWellMatrix (N, inWell, outWell)
+    plot = plt.imshow(mesh)
+    plt.show()
 
-    mesh = makeCircleWellMatrix (N, inWell, outWell)
-    
-    #mesh = makePolygonWellMatrix (N, inWell, outWell)
-    
     e_values, e_vec = general_potential(mesh)   
 
 
@@ -267,9 +303,9 @@ if __name__ == '__main__':
     print('vectors done')
 
     if 1:
-        np.save('data_E_vectors_circle' + str(N) +'x'+ str(N) + 'e' + str(Elevels) , e_vec)
+        np.save('data_E_vectors_seed' + str(N) +'x'+ str(N) + 'e' + str(Elevels) , e_vec)
         print ('save e_vec done')
 
-    displayAndSaveIm(e_vec)
+    #displayAndSaveIm(e_vec)
     
     print('****************************** all done *******************************')
