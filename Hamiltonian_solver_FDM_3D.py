@@ -32,6 +32,64 @@ def makeSphereWellMatrix (n, inW, outW):
 
 
 
+def tetrahedron (radius = 1, translation = 0):
+
+    v1 = [0, 0, 0]
+    v2 = [1, 1, 0]
+    v3 = [0, 1, 1]
+    v4 = [1, 0, 1]
+
+    points = np.array([v1, v2, v3, v4])
+
+    points[:, 0] = radius * points[:,0] + translation[0]
+    points[:, 1] = radius * points[:,1] + translation[1]
+    points[:, 2] = radius * points[:,2] + translation[2]
+
+    return points
+
+def PointInTetrahedron(arr, p):
+    a =  (SameSide(arr[0], arr[1], arr[2], arr[3], p) and
+           SameSide(arr[1], arr[2], arr[3], arr[0], p) and
+           SameSide(arr[2], arr[3], arr[0], arr[1], p) and
+           SameSide(arr[3], arr[0], arr[1], arr[2], p) )
+    return a
+
+def SameSide(v1, v2, v3, v4, p):
+
+    normal = np.cross(v2 - v1, v3 - v1)
+
+    dotV4 = np.dot(normal, v4 - v1)
+    dotP = np.dot(normal, p - v1)
+
+    s1 = math.copysign(1, dotV4)
+    s2 = math.copysign(1, dotP)
+
+    return s1 == s2
+
+def makeTetrahedronWellMatrix (n, inW, outW):
+    well_matrix = np.empty((n, n, n))
+
+    tetr = tetrahedron(n - 20, (0, 0, 0))
+
+
+    #00100
+    #01110
+    #00100
+    
+    for i in range(0, n):
+        for j in range(0, n):
+            for k in range(0, n):
+                if PointInTetrahedron(tetr, (i, j, k)):
+                    well_matrix[i][j][k] = inW
+                else:
+                    well_matrix[i][j][k] = outW
+
+    #well_matrix[0][0][0] = 1
+
+    return well_matrix
+
+
+
 def general_potential_3d(matrixWell3D, N, Elevels):
 
     position_mesh = np.matrix.flatten( matrixWell3D )
@@ -102,16 +160,19 @@ def toList(arr, n):
     return np.array(temp)
 
 
+def run():
 
-if __name__ == '__main__':
-
+    print('start')
+    
     Elevels = 50
     N = 70
 
-    mesh = makeSphereWellMatrix(N, 1, 0)
+    #mesh = makeSphereWellMatrix(N, 1, 0)
+    mesh = makeTetrahedronWellMatrix(N, 1, 0)
+    
     e_values, e_vec = general_potential_3d(mesh, N, Elevels)
 
-    np.save('data_E_vectors_sphere' + str(N) +'x'+ str(N) +'x'+ str(N) + 'e' + str(Elevels) , e_vec)
+    np.save('data_E_vectors_Tetrahedron' + str(N) +'x'+ str(N) +'x'+ str(N) + 'e' + str(Elevels) , e_vec)
 
     Elevel = pow(np.absolute( e_vec[:, 15].reshape(N, N, N) ), 2) 
 
@@ -135,3 +196,18 @@ if __name__ == '__main__':
     for i in range(0, N):
         displayVec(Elevel[:,:, i])
     '''
+
+def test():
+    N = 70
+    k = makeTetrahedronWellMatrix(N, 1, 0)
+    xyz = toList(k, N)
+
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(xyz)
+
+    o3d.visualization.draw_geometries([pcd])
+
+
+if __name__ == '__main__':
+    run()
+    
