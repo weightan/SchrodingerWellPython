@@ -285,8 +285,8 @@ def displayAndSaveIm (vectorsToImage):
 if __name__ == '__main__':
 
     print('start')
-    #mesh = makeCircleWellMatrix (N, inWell, outWell)
-    mesh = makeSeedWellMatrix (N, inWell, outWell)
+    mesh = makeCircleWellMatrix (N, inWell, outWell)
+    #mesh = makeSeedWellMatrix (N, inWell, outWell)
     plot = plt.imshow(mesh)
     plt.show()
 
