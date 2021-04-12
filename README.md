@@ -2,7 +2,7 @@
 ***
 Python solver for timeless Schrodinger equation for well with arbitrary shape
 ***
-more examples of pictures https://imgur.com/a/jlhK7OZ
+more  pictures https://imgur.com/a/jlhK7OZ
 
 wiki https://en.wikipedia.org/wiki/Dynamical_billiards#Quantum_chaos
 
