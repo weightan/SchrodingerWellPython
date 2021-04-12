@@ -2,7 +2,16 @@
 ***
 Python solver for timeless Schrodinger equation for well with arbitrary shape
 ***
-https://imgur.com/a/jlhK7OZ
+more examples of pictures https://imgur.com/a/jlhK7OZ
+
+wiki https://en.wikipedia.org/wiki/Dynamical_billiards#Quantum_chaos
+
+Finite difference method 
+
+https://www.youtube.com/playlist?list=PLLYQF5WvJdJWIfJ1UFYA2DvM4VT2Ef_86
+
+https://www.youtube.com/playlist?list=PL2W0zf0OhkIkphlIqEnBQBm3FQpYZCjss
+
 
 Pictures of spherical box 10 - 20 energy levels
 
