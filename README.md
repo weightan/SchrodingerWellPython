@@ -28,3 +28,5 @@ Pictures of circular well (80 - 120 energy levels)
 https://www.ks.uiuc.edu/Services/Class/PHYS480/EM.pdf
 
 http://oak.ucc.nau.edu/jws8/cubePDE/CubePaperSIADS.pdf
+
+https://en.wikipedia.org/wiki/Spherical_harmonics
