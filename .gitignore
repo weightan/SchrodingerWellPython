@@ -1,4 +1,11 @@
 
+<<<<<<< Updated upstream
 *.png
 *.json
+=======
+RenderOption_2021-04-03-21-47-18.json
+ScreenCapture_2021-04-03-21-58-51.png
+*.json
+*.png
+>>>>>>> Stashed changes
 *.npy

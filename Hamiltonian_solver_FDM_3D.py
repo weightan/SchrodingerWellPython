@@ -48,7 +48,7 @@ def tetrahedron (radius = 1, translation = 0):
     return points
 
 def PointInTetrahedron(arr, p):
-    a =  (SameSide(arr[0], arr[1], arr[2], arr[3], p) and
+    a =   (SameSide(arr[0], arr[1], arr[2], arr[3], p) and
            SameSide(arr[1], arr[2], arr[3], arr[0], p) and
            SameSide(arr[2], arr[3], arr[0], arr[1], p) and
            SameSide(arr[3], arr[0], arr[1], arr[2], p) )
@@ -117,7 +117,7 @@ def general_potential_3d(matrixWell3D, N, Elevels):
 
     Hamiltonian = diags(diagsV, diagsK, format = 'dia')
     
-    print('Hamiltonian values done')
+    print('Hamiltonian done')
 
 
     ################################################################################
@@ -138,8 +138,6 @@ def displayVec (vectorToImage):
     #plot = plt.imshow( vectorToImage, cmap='nipy_spectral', interpolation='gaussian') 
     plt.show()
     plt.close()
-
-
 
 
 def toList(arr, n):
@@ -163,18 +161,21 @@ def toList(arr, n):
 def run():
 
     print('start')
+
+    level_to_show = 11
     
-    Elevels = 50
-    N = 70
+    Elevels = 25
+    N = 50
 
     #mesh = makeSphereWellMatrix(N, 1, 0)
     mesh = makeTetrahedronWellMatrix(N, 1, 0)
     
     e_values, e_vec = general_potential_3d(mesh, N, Elevels)
 
-    np.save('data_E_vectors_Tetrahedron' + str(N) +'x'+ str(N) +'x'+ str(N) + 'e' + str(Elevels) , e_vec)
+    if 1:
+        np.save('data_E_vectors_Tetrahedron' + str(N) +'x'+ str(N) +'x'+ str(N) + 'e' + str(Elevels) , e_vec)
 
-    Elevel = pow(np.absolute( e_vec[:, 15].reshape(N, N, N) ), 2) 
+    Elevel = pow(np.absolute( e_vec[:, level_to_show].reshape(N, N, N) ), 2) 
 
 
     '''

@@ -1,28 +1,29 @@
 
 
 import numpy as np
-import matplotlib.pyplot as plt
 import math
+
+import matplotlib.pyplot as plt
 from PIL import Image
 
 from scipy.sparse.linalg import eigs 
 from scipy.sparse import diags, dia_matrix
 
 #calculate this number of eigenvectors = number of energy levels
-Elevels = 89
+Elevels = 50
 
 filename = 'seedmap.png'
-#image this eigenvectors
+#make images for this eigenvectors (range)
 images = [0, 16]
 
-# size of matrix N x N for well
+# size of matrix N x N for a well
 # set N = 30 to reduce the calculation time. 
 # You shouldn't put more than 500 otherwise the computation time will increase to hours
-N = 300 
+N = 128 
 
 inWell = 1
 
-#set 0.1 or so to reduce the calculation time. 
+#set 0.1 or so to reduce the computation time. 
 outWell = 0
 
 
@@ -112,6 +113,7 @@ def makeBiCircleWellMatrix (n, inW, outW):
 
     return well_matrix
 
+
 def makeTorWellMatrix (n, inW, outW):
 
     well_matrix = np.empty((n, n))
@@ -190,6 +192,7 @@ def polygonTr(sides, radius = 1, rotation = 0, translation = None):
 
     return points
 
+
 def makeHeartWellMatrix (n, inW, outW):
 
     well_matrix = np.empty((n, n))
@@ -208,6 +211,7 @@ def makeHeartWellMatrix (n, inW, outW):
 
     return well_matrix
 
+
 def makeSeedWellMatrix (n, inW, outW):
 
     well_matrix = np.empty((n, n))
@@ -224,6 +228,7 @@ def makeSeedWellMatrix (n, inW, outW):
                 well_matrix[i][j] = outW
 
     return well_matrix
+
 
 def general_potential(matrixWell2D):
 
@@ -256,15 +261,13 @@ def general_potential(matrixWell2D):
     ################################################################################
     
     #Hamiltonian.tocsr()
-    e_values, e_vec = eigs(Hamiltonian, k = Elevels )
+    e_values, e_vec = eigs(Hamiltonian, k = Elevels)
 
     print('All Hamiltonian done')
 
     ################################################################################
 
     return [e_values, e_vec]
-
-
 
 
 def displayAndSaveIm (vectorsToImage):
@@ -277,16 +280,15 @@ def displayAndSaveIm (vectorsToImage):
         
         plt.savefig( str(i) + 'c.png', bbox_inches = 'tight') 
            
-        plt.show()
-
-
+        #plt.show()
 
 
 if __name__ == '__main__':
 
     print('start')
-    mesh = makeCircleWellMatrix (N, inWell, outWell)
+    mesh = makeCircleWellMatrix(N, inWell, outWell)
     #mesh = makeSeedWellMatrix (N, inWell, outWell)
+
     plot = plt.imshow(mesh)
     plt.show()
 
@@ -308,4 +310,4 @@ if __name__ == '__main__':
 
     displayAndSaveIm(e_vec)
     
-    print('****************************** all done *******************************')
+    print('done')

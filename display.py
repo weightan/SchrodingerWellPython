@@ -6,8 +6,8 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
 
-e_vec = np.load('data_E_vectors_circle200x200e120.npy')
-N = 300
+e_vec = np.load('data_E_vectors_seed128x128e50.npy')
+N = 128
 
 print('done load')
 
@@ -44,7 +44,7 @@ def cMap2():
     cmap = LinearSegmentedColormap.from_list('my_list', colors, N=30)
     return cmap
 
-for i in range(100, 120):
+for i in range(1, 50):
 
     figure(num = None, figsize=(6, 6), dpi=300)
 
@@ -52,17 +52,17 @@ for i in range(100, 120):
 
     temp = pow( np.absolute( e_vec[:,i].reshape(N,N) ) ,2) 
 
-    newcmp = cMap2()
+    #newcmp = cMap2()
 
-    #newcmp = 'flag_r'
+    newcmp = 'nipy_spectral'
 
     plot = plt.imshow(temp, cmap = newcmp, interpolation='lanczos') 
 
-    plt.savefig( 'A' + str(i) + 'test' + '.png', bbox_inches = 'tight')
+    plt.savefig( 'P' + str(i) + 'test' + '.png', bbox_inches = 'tight')
     
     print(' + ' + str(i))
 
-    plt.show()
+    #plt.show()
 
     plt.close()
 
